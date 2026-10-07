@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="340" viewBox="0 0 1200 340" font-family="Segoe UI, -apple-system, Helvetica, Arial, sans-serif">
+<rect x="0.5" y="0.5" width="1199" height="339" rx="14" fill="#14111a" stroke="#5a1525"/>
+<text x="72" y="44" fill="#F0566A" font-size="13" font-weight="700" letter-spacing="3">51 PLANNED DAYS</text>
+<rect x="72" y="66" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="110" y="66" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="148" y="66" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="186" y="66" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="224" y="66" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="262" y="66" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="300" y="66" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="338" y="66" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="376" y="66" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="72" y="104" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="110" y="104" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="148" y="104" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="186" y="104" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="224" y="104" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="262" y="104" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="300" y="104" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="338" y="104" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="376" y="104" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="72" y="142" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="110" y="142" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="148" y="142" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="186" y="142" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="224" y="142" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="262" y="142" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="300" y="142" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="338" y="142" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="376" y="142" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="72" y="180" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="110" y="180" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="148" y="180" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="186" y="180" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="224" y="180" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="262" y="180" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="300" y="180" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="338" y="180" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="376" y="180" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="72" y="218" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="110" y="218" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="148" y="218" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="186" y="218" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="224" y="218" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="262" y="218" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="300" y="218" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="338" y="218" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="376" y="218" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="72" y="256" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="110" y="256" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="148" y="256" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="186" y="256" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="224" y="256" width="30" height="30" rx="6" fill="#C8102E"/>
+<rect x="262" y="256" width="30" height="30" rx="6" fill="#C8102E"/>
+<text x="72" y="316" fill="#b8aeb4" font-size="15">one square = one day of the plan</text>
+<text x="520" y="140" fill="#f3ecee" font-size="60" font-family="Georgia, 'Times New Roman', Times, serif">Motivation fades.</text>
+<text x="520" y="214" fill="#F0566A" font-size="60" font-family="Georgia, 'Times New Roman', Times, serif">Discipline stays.</text>
+<line x1="522" y1="246" x2="602" y2="246" stroke="#C8102E" stroke-width="3" stroke-linecap="round"/>
+<text x="520" y="286" fill="#d9ced2" font-size="23">51 days planned · 8 exams · 1–25 Sept</text>
+</svg>
