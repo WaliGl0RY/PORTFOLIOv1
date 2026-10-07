@@ -261,12 +261,33 @@ html.motion .scene__hint {
     linear-gradient(to bottom, var(--bg) 0%, rgba(9, 9, 11, 0) 22%),
     linear-gradient(to top, var(--bg) 0%, rgba(9, 9, 11, 0) 24%);
 }
+/* While the scene comes up from under the bridge its top edge would be a hard line across the screen. This lets
+   the picture come up out of the page colour instead; script takes it away as the scene settles and the
+   vignette above comes in. Without motion the vignette is there from the start, so it is not needed. */
+.how__seam { display: none; }
+html.motion .how__seam {
+  display: block; position: absolute; inset: 0 0 auto 0; height: 56vh; pointer-events: none;
+  background: linear-gradient(to bottom, var(--bg) 0%, rgba(9, 9, 11, .92) 20%, rgba(9, 9, 11, .55) 56%, rgba(9, 9, 11, 0) 100%);
+}
 .how {
   --chip-fs: clamp(14px, 1.85vh, 19px);
   --chip-gap: clamp(5px, .8vh, 10px);
   display: flex; flex-direction: column; gap: 32px;
 }
 .how__head .eyebrow { color: var(--fg); margin-bottom: 16px; }
+/* The line said over the first problems, with the accent rule of the lines in the contact scene (.beat): the
+   same voice. Without motion it stands above the title; with motion it takes the title's place first and gives
+   way to it. Its dark backing keeps it at AA contrast over any frame of the clip, like the one behind the bio. */
+.how__line {
+  position: relative; isolation: isolate; width: max-content; max-width: 100%; margin-bottom: 28px; padding-left: 22px;
+  font-size: clamp(24px, 2.5vw, 46px); font-weight: 700; line-height: 1.15; letter-spacing: -.028em;
+}
+.how__line::before {
+  content: ""; position: absolute; z-index: -1; inset: -10px -22px -12px -6px; border-radius: 16px;
+  background: rgba(9, 9, 11, .8); box-shadow: 0 0 40px 26px rgba(9, 9, 11, .8);
+}
+.how__line::after { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--accent); } /* the rule, in front of the backing */
+html.motion .how__line { position: absolute; left: 0; top: calc(var(--fs-eyebrow) * 1.4 + 18px); margin: 0; }
 /* order: problems above, ideas below, each as tidy rows that wrap */
 .how__board { display: grid; gap: clamp(12px, 1.8vh, 20px); max-width: 760px; }
 .how__label {
@@ -394,7 +415,7 @@ html.motion .scene--contact { height: 400vh; }
 .journey {
   --amp: clamp(44px, 5.8vw, 112px);  /* how far each lane sits from the middle */
   --step: clamp(104px, 13.5vh, 146px);
-  /* the long way out at the bottom is where the road swings to the right edge before it enters the scene */
+  /* the long way out at the bottom is where the road swings over to the lane it takes beside the bridge sentence */
   position: relative; padding: clamp(84px, 11vh, 124px) 24px clamp(190px, 27vh, 300px);
 }
 .journey__stops { position: relative; max-width: var(--wrap); margin-inline: auto; }
@@ -452,6 +473,30 @@ html.motion .scene--contact { height: 400vh; }
 .journey.is-armed .ms:not(.is-on) .ms__note,
 .journey.is-armed .ms:not(.is-on) .ms__date { color: #7C7C85; }
 .journey.is-armed .ms:not(.is-on) .ms__node { background: var(--bg); border-color: var(--line-2); box-shadow: 0 0 0 6px var(--bg); }
+
+/* ---------- bridge: one sentence between the path and the scene ----------
+   Base: a quiet block with the sentence, its last word a little loose, and the whole road drawn: down beside the
+   sentence, along under it with one tangle under that word, and down to the scene.
+   html.motion: a tall section whose stage is held while the road is drawn. Script sets --p as the road advances
+   (0 to 1 down beside the sentence, 1 to 2 under it, 2 to 3 down to the scene) and --at on each word, the point
+   at which the dot reaches it; from the two, each word works out how far it has come up. */
+.bridge { position: relative; --p: 3; }
+.bridge__stage { position: relative; display: flex; align-items: center; min-height: 72vh; padding-block: clamp(120px, 20vh, 220px); }
+.bridge__say {
+  position: relative; margin-left: calc(max(var(--gut), (100% - var(--wrap)) / 2) + .52em);
+  font-size: clamp(44px, 6vw, 112px); font-weight: 800; line-height: 1.06; letter-spacing: -.045em;
+}
+.bridge__say .line:first-child { color: var(--muted); }
+.bridge__loose { transform-origin: 0 80%; transform: rotate(calc(var(--tilt, 2.5) * -1deg)); } /* --tilt: degrees, set by script */
+html.motion .bridge { height: 200vh; }
+html.motion .bridge__stage { position: sticky; top: 0; height: 100vh; height: 100svh; min-height: 0; padding-block: 0 8vh; overflow: hidden; }
+html.motion .bridge__say .line:first-child { --rate: 9; }
+html.motion .bridge__say .line:last-child { --rate: 16; }
+html.motion .bridge__say .w > span {
+  --shown: clamp(0, calc((var(--p) - var(--at, 0)) * var(--rate)), 1);
+  transform: translateY(calc((1 - var(--shown)) * 118%));
+}
+html.motion .bridge__loose { transform: rotate(calc(clamp(0, calc((var(--p) - var(--at, 0)) * var(--turn, 4)), 1) * var(--tilt, 2.5) * -1deg)); }
 
 /* ---------- work: deep dive ---------- */
 .work__sub { margin-top: 14px; }

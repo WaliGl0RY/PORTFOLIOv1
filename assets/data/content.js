@@ -65,11 +65,20 @@ window.CONTENT = {
         tag: { en: "10/2026" }
       }
     ],
-    now: { en: "NOW | 2026", de: "JETZT | 2026" }
+    // the label where the road ends, inside the scene below
+    end: { en: "2026" }
   },
 
+  // One sentence between the path and the scene below, set on two lines; read together they are the sentence.
+  bridge: {
+    line1: { en: "Getting here", de: "Der Weg hierher" },
+    line2: { en: "wasn't tidy.", de: "war nicht aufgeräumt." }
+  },
+
+  // "line" comes once the first problems are in place and hands over to the title.
   how: {
     eyebrow: { en: "HOW I WORK", de: "WIE ICH ARBEITE" },
+    line: { en: "This is how I work.", de: "So arbeite ich." },
     title1: { en: "Chaos arrives.", de: "Chaos kommt." },
     title2: { en: "Structure answers.", de: "Struktur antwortet." },
     problemsLabel: { en: "PROBLEMS", de: "PROBLEME" },
