@@ -166,6 +166,12 @@
     });
   }
 
+  // The bridge sentence: its last word is the one that sits a little loose, and the road tangles under it.
+  function buildBridge() {
+    const last = $$('#bridge-say .w').pop();
+    if (last) last.classList.add('bridge__loose');
+  }
+
   function buildHow() {
     C.how.problems.forEach((p) => $('#how-problems').append(el('li', 'chip', t(p))));
     C.how.ideas.forEach((p) => $('#how-ideas').append(el('li', 'chip chip--idea', t(p))));
@@ -519,19 +525,20 @@
     }
   };
   const chaosSet = () => CHAOS[compact.matches ? 'tight' : 'wide'];
-  // The road comes into the scene down its right side and stops at ROAD_END (a share of the stage), at "now".
+  // The road comes into the scene down its right side and stops at ROAD_END (a share of the stage), at the year.
   // The first FIRST problems arrive while the scene is still rising into place: each comes a short way from the
   // direction of the road's end and lands with a small overshoot, so it is readable almost at once and all of
-  // them are in place before the title. The rest fly in from the directions in FLY_IN once the scene is pinned.
-  const ROAD_IN = 0.955; // where the road crosses from the path section into the scene, as a share of the width
+  // them are in place before anything is said. Then one line, then the title; the rest of the problems fly in
+  // from the directions in FLY_IN.
+  const ROAD_IN = 0.955; // where the road crosses from the bridge into the scene, as a share of the width
   const ROAD_END = [0.94, 0.2];
   const FIRST = 3;
   const FROM_ROAD = 0.42; // how much of the way from its place towards the road's end a first problem starts
   const FLY_IN = [[-0.5, -0.2], [-0.5, 0.3], [0.5, 0.4], [-0.3, 0.6], [0, -0.5], [0.4, -0.45], [0, 0.5]];
-  // The bridge plays while the scene's top edge travels this share of the viewport up to the top:
+  // The first problems arrive while the scene's top edge travels this share of the viewport up to the top:
   // it starts when the dot (riding at 0.58 of the viewport) reaches the road's end.
-  const BRIDGE_RISE = 0.38;
-  const HOW = { title: 0.11, roadOut: 0.15, problems: 0.19, problemGap: 0.028, ideas: 0.44, ideaGap: 0.032, order: 0.6, cards: 0.74 };
+  const ARRIVAL_RISE = 0.38;
+  const HOW = { line: 0.015, title: 0.15, roadOut: 0.19, problems: 0.215, problemGap: 0.027, ideas: 0.45, ideaGap: 0.032, order: 0.6, cards: 0.74 };
   // Problems are larger while they are chaos and shrink into their place in the list (less so where space is tight).
   const loud = () => (compact.matches ? 1.04 : 1.22);
 
@@ -561,30 +568,37 @@
       return { x: here.x + (road.x - here.x) * FROM_ROAD, y: here.y + (road.y - here.y) * FROM_ROAD };
     };
 
-    // 0 · the bridge, while the scene is still rising into place: "Eight exams", "No job" and "Pressure" land
+    // 0 · the arrival, while the scene is still rising into place: "Eight exams", "No job" and "Pressure" land
     //     one after another, each from the direction of the road's end. No lines: only the notes move. All three
     //     are in place, full size and fully visible, by the time the scene pins.
-    const bridge = gsap.timeline();
+    const arrival = gsap.timeline();
     groups.problems.slice(0, FIRST).forEach((chip, i) => {
       const start = 0.12 + i * 0.16;
       const length = 0.56;
-      bridge.fromTo(chip, {
+      arrival.fromTo(chip, {
         x: () => fromRoad(chip, i).x, y: () => fromRoad(chip, i).y,
         rotation: () => spot('problems', i).tilt * 3, scale: 0.7
       }, {
         x: () => spot('problems', i).x, y: () => spot('problems', i).y,
         rotation: () => spot('problems', i).tilt, scale: loud, ease: 'back.out(1.4)', duration: length
       }, start);
-      bridge.fromTo(chip, { opacity: 0 }, { opacity: 1, ease: 'none', duration: length * 0.25 }, start);
+      arrival.fromTo(chip, { opacity: 0 }, { opacity: 1, ease: 'none', duration: length * 0.25 }, start);
     });
-    bridge.set({}, {}, 1);
+    arrival.set({}, {}, 1);
 
     // The scene itself: a timeline of length 1 over the pinned scroll, like the other two scenes.
     const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
     vignette(tl, scene, 0.35, 0, 0.14);
+    // the fade that brought the picture up out of the page goes as the vignette comes in
+    tl.fromTo($('.how__seam', scene.el), { opacity: 1 }, { opacity: 0, ease: 'none', duration: 0.12 }, 0);
     tl.fromTo(part(scene, 'hint'), { opacity: 1 }, { opacity: 0, ease: 'none', duration: 0.06 }, 0.02);
 
-    // 1 · only now the title, then the road steps back
+    // 1 · the three problems are in place: one line says what they are doing here, and gives way to the title
+    const line = part(scene, 'line');
+    tl.fromTo(line, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.04 }, HOW.line);
+    tl.fromTo(line, { opacity: 1, y: 0 }, { opacity: 0, y: -14, ease: 'power1.in', duration: 0.03, immediateRender: false }, HOW.title - 0.03);
+
+    // 2 · the title, then the road steps back
     rise(tl, part(scene, 'eyebrow'), HOW.title, 0.05);
     words(tl, part(scene, 'title'), HOW.title + 0.02);
     tl.fromTo('#how-road', { opacity: 1 }, { opacity: 0, ease: 'none', duration: 0.08, immediateRender: false }, HOW.roadOut);
@@ -636,11 +650,11 @@
     scene.liveAt = HOW.cards + 0.06;
 
     // Both run on one scroll-driven timeline, so they can never disagree about a note after a fast jump:
-    // the bridge over the last BRIDGE_RISE viewport heights before the scene pins, the scene over the pinned scroll.
+    // the arrival over the last ARRIVAL_RISE viewport heights before the scene pins, the scene over the pinned scroll.
     const pinned = scene.el.offsetHeight / innerHeight - 1; // pinned scroll, in viewport heights
     gsap.timeline({
-      scrollTrigger: { trigger: scene.el, start: `top ${BRIDGE_RISE * 100}%`, end: 'bottom bottom', scrub: 0.5, invalidateOnRefresh: true }
-    }).add(bridge.duration(BRIDGE_RISE), 0).add(tl.duration(pinned), BRIDGE_RISE);
+      scrollTrigger: { trigger: scene.el, start: `top ${ARRIVAL_RISE * 100}%`, end: 'bottom bottom', scrub: 0.5, invalidateOnRefresh: true }
+    }).add(arrival.duration(ARRIVAL_RISE), 0).add(tl.duration(pinned), ARRIVAL_RISE);
   }
 
   // The contact clip: profile until ~0.15 of the scene, the turn until ~0.33, then facing us, and the smile
@@ -730,7 +744,7 @@
     })();
   }
 
-  /* ---------- the road: from the end of the bio, through the milestones, to "now" inside the scene ---------- */
+  /* ---------- the road: from the end of the bio, through the milestones, under the bridge sentence, into the scene ---------- */
 
   // The hero's video frame as it covers the stage; the name beside his head is placed in shares of it (see style.css).
   function fitHeroFrame() {
@@ -754,21 +768,28 @@
     const heroText = $('.hero__text', heroBox);
     const start = $('#road-start');
     const journey = $('#journey');
+    const bridge = $('#bridge');
+    const bridgeStage = $('.bridge__stage', bridge);
+    const say = $('#bridge-say');
     const stage = $('.scene--how .scene__stage');
     const stops = $$('.ms', journey);
     const nodes = $$('.ms__node', journey);
     const captions = C.path.milestones.map((m) => t(m.tag));
     const tag = $('#journey-tag');
-    const now = $('#how-now');
+    const endTag = $('#how-end');
 
-    // The road is three stretches, one per section, that meet at the section edges.
+    // The road is four stretches, one per section, that meet at the section edges.
     const stretch = (svg, box) => ({
       svg, box, paths: $$('path', svg), line: $('.road__line', svg), dot: $('.road__dot', svg), length: 0, ys: []
     });
     const inHero = stretch($('#road-hero'), heroBox);
     const inPath = stretch($('#road-path'), journey);
+    const inBridge = stretch($('#road-bridge'), bridgeStage);
     const inScene = stretch($('#road-how'), stage);
     let marks = []; // length along the path stretch at which each milestone is reached
+    // The bridge stretch has three legs: down beside the sentence, along under it, and down to the scene.
+    let legs = [0, 0, 0];
+    let travelled = -1; // how far along those legs the road was last drawn (0 to 3), kept so --p is only set on a change
     let end = { x: 0, y: 0 }; // where the road stops inside the scene
     let caption = -1;
     let tagRight = true; // which side of the dot the caption is on
@@ -804,6 +825,27 @@
       const half = (b.y - a.y) / 2;
       return `${d} C${a.x},${a.y + half} ${b.x},${b.y - half} ${b.x},${b.y}`;
     }, `M${pts[0].x},${pts[0].y}`);
+    // The one untidy place on the road. Between `from` and `to` the line loses its way: it winds forward and back
+    // over itself while it dips below its level, a second, slower winding keeping the loops uneven. The winding
+    // grows slowly out of the straight line and settles back into it as slowly, so both ends meet the road at
+    // its level, heading along it. Returns the points and the length of the line through them.
+    const tangle = (from, to, level, size) => {
+      const loops = clamp(Math.round((to - from) / (0.5 * size)), 4, 6);
+      const steps = loops * 32;
+      const ease = (v) => { const c = clamp(v); return c * c * (3 - 2 * c); };
+      const pts = [];
+      let length = 0;
+      for (let i = 0; i <= steps; i++) {
+        const s = i / steps;
+        const turn = s * loops * 2 * Math.PI;
+        const swell = Math.min(ease(s / 0.46), ease((1 - s) / 0.38));
+        const x = from + (to - from) * s - swell * size * (0.36 * Math.sin(turn) + 0.12 * Math.sin(1.7 * turn));
+        const y = level + swell * size * (0.25 * (1 - Math.cos(turn)) + 0.08 * (1 - Math.cos(1.7 * turn)));
+        if (i) length += Math.hypot(x - pts[i - 1].x, y - pts[i - 1].y);
+        pts.push({ x, y });
+      }
+      return { d: pts.map((p) => `L${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' '), length };
+    };
 
     const draw = (s, length, showDot) => {
       s.line.style.strokeDashoffset = s.length - length;
@@ -817,9 +859,9 @@
 
     const update = () => {
       if (!motion) {
-        // finished state: the whole road drawn, every milestone lit, the dot resting at "now"
-        [inHero, inPath, inScene].forEach((s) => draw(s, s.length, s === inScene));
-        now.classList.add('is-on');
+        // finished state: the whole road drawn, every milestone lit, the dot resting at the road's end
+        [inHero, inPath, inBridge, inScene].forEach((s) => draw(s, s.length, s === inScene));
+        endTag.classList.add('is-on');
         return;
       }
       const vh = innerHeight;
@@ -835,12 +877,27 @@
       const height = journey.offsetHeight;
       const along = lengthAt(inPath, clamp(y, 0, height));
 
-      // 3 · scene: the road runs on into the stage and stops at "now"
+      // 3 · bridge: each leg is a share of its own stretch of scroll. Down beside the sentence while the stage
+      //     comes up to the top, along under it while the stage is held there, and down to the scene's edge
+      //     while the stage leaves; the last leg ends as the scene's edge reaches the dot's riding height.
+      const held = bridgeStage.getBoundingClientRect().top;
+      const hold = bridge.offsetHeight - bridgeStage.offsetHeight;
+      const legShare = [
+        clamp(1 - held / (DOT_LINE * vh)),
+        hold > 0 ? clamp(-bridge.getBoundingClientRect().top / hold) : +(held <= 0),
+        clamp(-held / ((1 - DOT_LINE) * vh))
+      ];
+      const done = legShare[0] + legShare[1] + legShare[2];
+      if (done !== travelled) { travelled = done; bridge.style.setProperty('--p', done.toFixed(4)); }
+
+      // 4 · scene: the road runs on into the stage and stops at the year
       const sceneY = DOT_LINE * vh - stage.getBoundingClientRect().top;
 
+      const past = y >= height; // the dot has left the path section
       draw(inHero, inHero.length * heroShare, heroShare > 0 && y <= 0);
-      const at = draw(inPath, along, y > 0 && y < height);
-      draw(inScene, lengthAt(inScene, clamp(sceneY, 0, end.y)), y >= height);
+      const at = draw(inPath, along, y > 0 && !past);
+      draw(inBridge, legs.reduce((sum, leg, i) => sum + leg * legShare[i], 0), past && done < 3);
+      draw(inScene, lengthAt(inScene, clamp(sceneY, 0, end.y)), past && done >= 3);
 
       let reached = -1;
       marks.forEach((mark, i) => {
@@ -866,7 +923,7 @@
           ? `translate(${at.x + 22}px, ${at.y}px) translate(0, -50%)`
           : `translate(${at.x - 22}px, ${at.y}px) translate(-100%, -50%)`;
       }
-      now.classList.toggle('is-on', y >= height && sceneY >= end.y - 1);
+      endTag.classList.toggle('is-on', past && sceneY >= end.y - 1);
     };
 
     const measure = () => {
@@ -882,18 +939,46 @@
       const r = 26;
       shape(inHero, `M${from.x + 12},${from.y} L${turn - r},${from.y} Q${turn},${from.y} ${turn},${from.y + r} L${turn},${heroBox.offsetHeight}`);
 
-      // path: in at the top where the hero's line left, through every milestone, out where the scene picks it up
-      const left = journey.getBoundingClientRect().left;
+      // bridge: straight down beside the sentence, round the corner and along under it, the tangle under its
+      // last word, on to the right edge and down to where the scene picks the road up
+      const size = parseFloat(getComputedStyle(say).fontSize);
+      const text = layoutPos(say, bridgeStage);
+      const lane = text.x - 0.34 * size;
+      const under = text.y + say.offsetHeight + 0.24 * size;
       const exit = ROAD_IN * width;
-      const pts = [{ x: turn - left, y: 0 }, ...nodes.map((n) => centre(n, journey)), { x: exit - left, y: journey.offsetHeight }];
+      const loose = $('.bridge__loose', say);
+      const word = layoutPos(loose, bridgeStage);
+      const knot = tangle(word.x, word.x + loose.offsetWidth, under, size);
+      shape(inBridge, `M${lane},0 L${lane},${under - r} Q${lane},${under} ${lane + r},${under} L${word.x},${under} ${knot.d} L${exit - r},${under} Q${exit},${under} ${exit},${under + r} L${exit},${bridgeStage.offsetHeight}`);
+      legs = [under - r, 0, bridgeStage.offsetHeight - under - r];
+      legs[1] = inBridge.length - legs[0] - legs[2];
+      // Each word comes up as the dot reaches it (--at, on the same 0 to 3 scale as --p): the first line as the
+      // dot passes it on the way down, the second word by word as the dot runs along under it. The last word
+      // also turns loose while the tangle under it is drawn (--turn is how fast, so it ends with the tangle).
+      const corner = 1.62 * r; // length of the rounded corner
+      $$('.line', say).forEach((line, row) => $$('.w', line).forEach((w, i) => {
+        const at = row === 0
+          ? clamp((layoutPos(line, bridgeStage).y + line.offsetHeight / 2) / legs[0]) - 0.16 + i * 0.05
+          : 1 + clamp((corner + layoutPos(w, bridgeStage).x - lane - r) / legs[1]) - 0.012;
+        w.style.setProperty('--at', at.toFixed(4));
+      }));
+      loose.style.setProperty('--turn', (legs[1] / knot.length).toFixed(3));
+      // how far it turns: its far end lifts by the same small share of the type size, whatever the word's length
+      loose.style.setProperty('--tilt', clamp((Math.asin(clamp((0.13 * size) / loose.offsetWidth)) * 180) / Math.PI, 1, 4).toFixed(2));
+
+      // path: in at the top where the hero's line left, through every milestone, out where the bridge picks it up
+      const left = journey.getBoundingClientRect().left;
+      const into = lane + bridgeStage.getBoundingClientRect().left;
+      const pts = [{ x: turn - left, y: 0 }, ...nodes.map((n) => centre(n, journey)), { x: into - left, y: journey.offsetHeight }];
       shape(inPath, sway(pts));
       marks = nodes.map((n, i) => lengthAt(inPath, pts[i + 1].y));
 
-      // scene: the last stretch down the right side, ending at "now"
+      // scene: the last stretch down the right side, ending at the year
       end = { x: ROAD_END[0] * stage.clientWidth, y: ROAD_END[1] * stage.clientHeight };
       shape(inScene, sway([{ x: exit, y: 0 }, end]));
-      // "now" sits up and to the left of the road's end
-      now.style.transform = `translate(${end.x - 16}px, ${end.y - 16}px) translate(-100%, -100%)`;
+      // the year sits up and to the left of the road's end
+      endTag.style.transform = `translate(${end.x - 16}px, ${end.y - 16}px) translate(-100%, -100%)`;
+      travelled = -1;
       update();
     };
 
@@ -906,7 +991,7 @@
     addEventListener('resize', resize);
     if ('ResizeObserver' in window) {
       const watch = new ResizeObserver(resize);
-      [journey, heroText].forEach((n) => watch.observe(n));
+      [journey, heroText, say].forEach((n) => watch.observe(n));
     }
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(resize);
   }
@@ -1673,6 +1758,7 @@
   buildName();
   buildBio();
   buildJourney();
+  buildBridge();
   fitHeroFrame();
   buildHow();
   buildContact();

@@ -74,7 +74,7 @@
       </div>
     </section>
 
-    <!-- 2 · path: the road runs on from the hero, through the milestones, and into the scene below -->
+    <!-- 2 · path: the road runs on from the hero, through the milestones, and on into the bridge below -->
     <section class="path" id="path" aria-labelledby="path-title">
       <h2 class="sr" id="path-title" data-t="path.title"></h2>
       <div class="journey" id="journey">
@@ -89,7 +89,22 @@
       </div>
     </section>
 
-    <!-- 3 · "how I work" video scene: chaos, ideas, order, then the three project cards -->
+    <!-- 3 · bridge: one sentence between the path and the scene below. The road comes down beside it, runs on
+         under it, tangles once under its last word and leaves for the scene. -->
+    <section class="bridge" id="bridge">
+      <div class="bridge__stage">
+        <svg class="road road--bridge" id="road-bridge" aria-hidden="true" focusable="false">
+          <path class="road__line"></path>
+          <circle class="road__dot" r="7"></circle>
+        </svg>
+        <p class="bridge__say" id="bridge-say">
+          <span class="line" data-t="bridge.line1" data-words></span>
+          <span class="line" data-t="bridge.line2" data-words></span>
+        </p>
+      </div>
+    </section>
+
+    <!-- 4 · "how I work" video scene: chaos, ideas, order, then the three project cards -->
     <section class="scene scene--how" id="how" data-scene="how" aria-labelledby="how-title">
       <div class="scene__stage">
         <picture class="scene__poster">
@@ -97,16 +112,20 @@
         </picture>
         <video class="scene__video" muted playsinline preload="none" tabindex="-1" aria-hidden="true" data-src="assets/video/scene-2.mp4"></video>
         <div class="scene__vignette"></div>
-        <!-- the road ends here, at "now" -->
+        <!-- lets the picture come up out of the dark page instead of with a hard top edge -->
+        <div class="how__seam"></div>
+        <!-- the road ends here, at the year -->
         <div class="how__road" id="how-road" aria-hidden="true">
           <svg class="road road--how" id="road-how" focusable="false">
             <path class="road__line"></path>
             <circle class="road__dot" r="7"></circle>
           </svg>
-          <p class="road__tag road__tag--now" id="how-now" data-t="path.now"></p>
+          <p class="road__tag road__tag--end" id="how-end" data-t="path.end"></p>
         </div>
         <div class="scene__content how">
           <div class="how__head">
+            <!-- said once the first problems are in place; it hands over to the title below -->
+            <p class="how__line" data-s="line" data-t="how.line"></p>
             <p class="eyebrow" data-s="eyebrow" data-t="how.eyebrow"></p>
             <h2 class="headline" id="how-title" data-s="title">
               <span class="line" data-t="how.title1" data-words></span>
@@ -129,7 +148,7 @@
       </div>
     </section>
 
-    <!-- 4 · work: the deep dive -->
+    <!-- 5 · work: the deep dive -->
     <section class="section work" id="work" aria-labelledby="work-title">
       <div class="wrap">
         <h2 class="headline" id="work-title" data-t="work.title" data-rv></h2>
@@ -171,7 +190,7 @@
       </div>
     </section>
 
-    <!-- 5 · skills -->
+    <!-- 6 · skills -->
     <section class="section skills" id="skills" aria-labelledby="skills-title">
       <div class="wrap">
         <p class="eyebrow" data-t="skills.eyebrow"></p>
@@ -192,7 +211,7 @@
       </div>
     </section>
 
-    <!-- 6 · contact video scene -->
+    <!-- 7 · contact video scene -->
     <section class="scene scene--contact" id="contact" data-scene="contact" aria-labelledby="contact-title">
       <div class="scene__stage">
         <picture class="scene__poster">
