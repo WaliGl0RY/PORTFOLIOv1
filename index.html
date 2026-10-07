@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#09090B">
+  <title>Walid Ragoub</title>
+  <!-- Before first paint: the remembered language (English unless German was chosen), and the scroll-driven layout.
+       Without that layout every scene is a normal, fully readable section. -->
+  <script>
+    (function () {
+      var root = document.documentElement;
+      try {
+        if (localStorage.getItem('lang') === 'de') root.lang = 'de';
+        // after a language switch the page finds the reader's place itself, by section
+        if (sessionStorage.getItem('lang-at')) history.scrollRestoration = 'manual';
+      } catch (e) {}
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) root.classList.add('motion');
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip" href="#main" data-t="a11y.skip"></a>
+
+  <div class="progress" aria-hidden="true"><span class="progress__bar"></span></div>
+
+  <header class="nav">
+    <a class="nav__logo" href="#top" data-t="nav.logo" data-t-aria="nav.home"></a>
+    <div class="nav__end">
+      <div class="lang" id="lang" role="group" data-t-aria="nav.langLabel"></div>
+      <a class="pill" data-mail data-t="nav.cta"></a>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+
+    <!-- 1 · hero video scene -->
+    <section class="scene scene--hero" id="top" data-scene="hero">
+      <div class="scene__stage">
+        <picture class="scene__poster">
+          <source media="(prefers-reduced-motion: reduce)" srcset="assets/video/hero-poster.jpg">
+          <img src="assets/video/hero-first.jpg" alt="" width="1920" height="1080">
+        </picture>
+        <video class="scene__video" muted playsinline preload="none" tabindex="-1" aria-hidden="true" data-src="assets/video/hero.mp4"></video>
+        <div class="scene__vignette"></div>
+        <div class="scene__content hero">
+          <!-- the name sits either side of his head: "Walid" slides out from behind it, "Ragoub" drifts in with the camera.
+               Each word is a solid: script stacks copies of the face behind it to give the letters depth. -->
+          <h1 class="display name" data-s="title"><span class="name__side name__side--l"><span class="name__word"><span class="name__solid"><span class="name__face" data-t="hero.first"></span></span></span></span> <span class="name__side name__side--r"><span class="name__word"><span class="name__solid"><span class="name__face" data-t="hero.last"></span></span></span></span></h1>
+          <div class="hero__text">
+            <span class="hero__scrim" data-s="scrim" aria-hidden="true"></span>
+            <p class="eyebrow" data-s="eyebrow" data-t="hero.eyebrow"></p>
+            <p class="hero__bio" data-s="bio"><span id="hero-bio"></span><span class="road-start" id="road-start" aria-hidden="true"></span></p>
+            <p class="hook" data-s="hook" data-t="hero.hook"></p>
+            <div class="btns" data-s="btns">
+              <a class="btn btn--solid" href="#work" data-t="hero.cta1"></a>
+              <a class="btn btn--ghost" data-mail data-t="hero.cta2"></a>
+            </div>
+          </div>
+          <!-- the road starts where the bio ends -->
+          <svg class="road road--hero" id="road-hero" aria-hidden="true" focusable="false">
+            <path class="road__line"></path>
+            <circle class="road__dot" r="6"></circle>
+          </svg>
+        </div>
+        <p class="scene__hint" data-s="hint" aria-hidden="true"><span data-t="hero.scroll"></span></p>
+      </div>
+    </section>
+
+    <!-- 2 · path: the road runs on from the hero, through the milestones, and into the scene below -->
+    <section class="path" id="path" aria-labelledby="path-title">
+      <h2 class="sr" id="path-title" data-t="path.title"></h2>
+      <div class="journey" id="journey">
+        <svg class="road" id="road-path" aria-hidden="true" focusable="false">
+          <path class="road__bed"></path>
+          <path class="road__rail"></path>
+          <path class="road__line"></path>
+          <circle class="road__dot" r="7"></circle>
+        </svg>
+        <ol class="journey__stops" id="journey-stops"></ol>
+        <p class="road__tag" id="journey-tag" aria-hidden="true"></p>
+      </div>
+    </section>
+
+    <!-- 3 · "how I work" video scene: chaos, ideas, order, then the three project cards -->
+    <section class="scene scene--how" id="how" data-scene="how" aria-labelledby="how-title">
+      <div class="scene__stage">
+        <picture class="scene__poster">
+          <img src="assets/video/scene-2-poster.jpg" alt="" width="1280" height="720" loading="lazy">
+        </picture>
+        <video class="scene__video" muted playsinline preload="none" tabindex="-1" aria-hidden="true" data-src="assets/video/scene-2.mp4"></video>
+        <div class="scene__vignette"></div>
+        <!-- the road ends here, at "now" -->
+        <div class="how__road" id="how-road" aria-hidden="true">
+          <svg class="road road--how" id="road-how" focusable="false">
+            <path class="road__line"></path>
+            <circle class="road__dot" r="7"></circle>
+          </svg>
+          <p class="road__tag road__tag--now" id="how-now" data-t="path.now"></p>
+        </div>
+        <div class="scene__content how">
+          <div class="how__head">
+            <p class="eyebrow" data-s="eyebrow" data-t="how.eyebrow"></p>
+            <h2 class="headline" id="how-title" data-s="title">
+              <span class="line" data-t="how.title1" data-words></span>
+              <span class="line" data-t="how.title2" data-words></span>
+            </h2>
+          </div>
+          <div class="how__board" id="how-board">
+            <div class="how__col">
+              <p class="how__label" id="how-problems-label" data-t="how.problemsLabel"></p>
+              <ul class="how__list" id="how-problems" aria-labelledby="how-problems-label"></ul>
+            </div>
+            <div class="how__col">
+              <p class="how__label" id="how-ideas-label" data-t="how.ideasLabel"></p>
+              <ul class="how__list" id="how-ideas" aria-labelledby="how-ideas-label"></ul>
+            </div>
+          </div>
+          <div class="how__cards" id="cards" role="group" data-t-aria="how.cardsLabel"></div>
+        </div>
+        <p class="scene__hint" data-s="hint" aria-hidden="true"><span data-t="hero.scroll"></span></p>
+      </div>
+    </section>
+
+    <!-- 4 · work: the deep dive -->
+    <section class="section work" id="work" aria-labelledby="work-title">
+      <div class="wrap">
+        <h2 class="headline" id="work-title" data-t="work.title" data-rv></h2>
+        <p class="eyebrow work__sub" data-t="work.sub" data-rv></p>
+        <div class="dive" data-rv>
+          <div class="dive__index" id="dive-index" role="tablist" aria-orientation="vertical" data-t-aria="work.index"></div>
+          <article class="dive__stage" id="dive-stage" role="tabpanel" tabindex="-1">
+            <div class="dive__main" id="dive-main">
+              <div class="dive__visual" id="dive-visual"></div>
+              <div class="dive__body" id="dive-body">
+                <p class="dive__date" id="dive-date"></p>
+                <h3 class="dive__name" id="dive-name"></h3>
+                <p class="dive__line" id="dive-line"></p>
+                <ul class="dive__tags" id="dive-tags"></ul>
+                <dl class="dive__blocks">
+                  <div><dt data-t="work.problem"></dt><dd id="dive-problem"></dd></div>
+                  <div><dt data-t="work.built"></dt><dd id="dive-built"></dd></div>
+                  <div><dt data-t="work.out"></dt><dd id="dive-out"></dd></div>
+                </dl>
+                <div class="dive__actions">
+                  <button class="btn btn--ghost dive__readme" id="dive-readme" type="button" data-t="work.readme"></button>
+                  <button class="btn btn--ghost" id="dive-story-open" type="button" aria-expanded="false" aria-controls="dive-story" data-t="work.story.open"></button>
+                </div>
+              </div>
+            </div>
+            <!-- the story lies over the stage instead of pushing it apart -->
+            <section class="story" id="dive-story" aria-labelledby="story-kicker story-title" tabindex="-1" data-lenis-prevent hidden>
+              <header class="story__head">
+                <div>
+                  <p class="eyebrow story__kicker" id="story-kicker" data-t="work.story.kicker"></p>
+                  <h4 class="story__title" id="story-title"></h4>
+                </div>
+                <button class="story__close" id="dive-story-close" type="button" data-t="work.story.close" data-t-aria="work.story.closeLabel"></button>
+              </header>
+              <div class="story__text" id="story-text"></div>
+            </section>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · skills -->
+    <section class="section skills" id="skills" aria-labelledby="skills-title">
+      <div class="wrap">
+        <p class="eyebrow" data-t="skills.eyebrow"></p>
+        <h2 class="headline" id="skills-title" data-t="skills.title" data-rv></h2>
+        <!-- pick a skill, and the projects it ran in light up with one line on what it did there -->
+        <div class="used" data-rv>
+          <h3 class="used__label" id="used-label" data-t="skills.usedLabel"></h3>
+          <div class="used__skills" id="used-skills" role="group" aria-labelledby="used-label"></div>
+          <h3 class="used__label" id="ran-label" data-t="skills.ranLabel"></h3>
+          <div class="used__projects" id="used-projects" role="group" aria-labelledby="ran-label"></div>
+          <p class="sr" id="used-status" role="status" aria-live="polite"></p>
+        </div>
+        <!-- learned in courses: a second group of plain text in plain columns, not linked to any project -->
+        <div class="studies" data-rv>
+          <h3 class="studies__title" data-t="skills.studiesLabel"></h3>
+          <div class="studies__groups" id="studies-groups"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 · contact video scene -->
+    <section class="scene scene--contact" id="contact" data-scene="contact" aria-labelledby="contact-title">
+      <div class="scene__stage">
+        <picture class="scene__poster">
+          <img src="assets/video/scene-3-poster.jpg" alt="" width="1280" height="720" loading="lazy">
+        </picture>
+        <video class="scene__video" muted playsinline preload="none" tabindex="-1" aria-hidden="true" data-src="assets/video/scene-3.mp4"></video>
+        <div class="scene__vignette"></div>
+        <div class="scene__content contact">
+          <!-- four lines that come and go on the empty side of the frame while the clip plays -->
+          <div class="contact__beats" id="contact-beats"></div>
+          <!-- on the smile -->
+          <div class="contact__final">
+            <p class="eyebrow" data-s="eyebrow" data-t="contact.eyebrow"></p>
+            <h2 class="display" id="contact-title" data-s="title">
+              <span class="line" data-t="contact.title1" data-words></span>
+              <span class="line" lang="en" data-t="contact.title2" data-words></span>
+            </h2>
+            <p class="contact__sub" data-s="sub" data-t="contact.sub"></p>
+            <p class="contact__mail" data-s="mail">
+              <span class="mail" id="mail-text"></span>
+              <button class="copy" type="button" id="mail-copy" data-t="contact.copy" data-t-aria="contact.copyLabel"></button>
+              <span class="mail__status" id="mail-status" role="status" aria-live="polite"></span>
+            </p>
+            <div class="btns" data-s="btns">
+              <a class="btn btn--solid" data-mail data-t="contact.cta"></a>
+              <a class="btn btn--ghost" id="github-link" rel="noopener"></a>
+              <a class="btn btn--ghost" id="cv-link" data-t="contact.cv" hidden></a>
+            </div>
+            <!-- the languages he works in: a label and the names in a quiet row (the sentence itself is in the row, see script) -->
+            <div class="langs" data-s="langs">
+              <p class="langs__label" data-t="contact.languages.label"></p>
+              <p class="langs__row" id="langs-row"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p data-t="footer"></p>
+  </footer>
+
+  <!-- project window: the README inside the site -->
+  <div class="pw" id="pw" hidden>
+    <div class="pw__flood" aria-hidden="true"></div>
+    <div class="pw__backdrop" aria-hidden="true"></div>
+    <section class="pw__win" role="dialog" aria-modal="true" aria-labelledby="pw-title" tabindex="-1">
+      <header class="pw__bar">
+        <div class="pw__lights">
+          <button class="light light--r" type="button" data-pw="close" data-t-aria="window.close"></button>
+          <button class="light light--y" type="button" data-pw="min" data-t-aria="window.minimize"></button>
+          <button class="light light--g" type="button" data-pw="full" data-t-aria="window.full"></button>
+        </div>
+        <h2 class="pw__title" id="pw-title"></h2>
+        <div class="pw__tools">
+          <div class="pw__tabs" id="pw-tabs" role="tablist" data-t-aria="window.docs"></div>
+          <a class="pw__gh" id="pw-github" target="_blank" rel="noopener noreferrer"><span data-t="window.github"></span><span aria-hidden="true">↗</span></a>
+        </div>
+      </header>
+      <div class="pw__body" id="pw-body" role="region" tabindex="0" data-lenis-prevent data-t-aria="window.content">
+        <aside class="pw__note">
+          <span class="pw__note-k" data-t="window.note"></span>
+          <p id="pw-note"></p>
+        </aside>
+        <div class="pw__doc" id="pw-doc"></div>
+      </div>
+    </section>
+  </div>
+  <button class="dock" id="dock" type="button" hidden>
+    <span class="dock__dot" aria-hidden="true"></span>
+    <span class="dock__name" id="dock-name"></span>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/Draggable.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/InertiaPlugin.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@15.0.12/marked.min.js"></script>
+  <script src="assets/data/content.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
