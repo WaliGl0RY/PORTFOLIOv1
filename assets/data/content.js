@@ -441,8 +441,7 @@ window.CONTENT = {
         label: { en: "Methods and courses", de: "Methoden und Kurse" },
         items: [
           { en: "Scrum from the SWP project", de: "Scrum aus dem SWP-Projekt" },
-          { en: "Microsoft Entra ID module", de: "Modul zu Microsoft Entra ID" },
-          { en: "SAP (in progress)", de: "SAP (läuft noch)" }
+          { en: "Microsoft Entra ID module", de: "Modul zu Microsoft Entra ID" }
         ]
       }
     ]
